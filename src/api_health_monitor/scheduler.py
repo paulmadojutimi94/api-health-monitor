@@ -27,7 +27,7 @@ import random
 import threading
 import time
 from dataclasses import dataclass, field
-from typing import Callable
+from collections.abc import Callable
 
 from .checker import CheckResult, deadline_result
 from .config import Endpoint
