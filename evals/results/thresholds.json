@@ -1,0 +1,83 @@
+{
+  "interval_s": 30.0,
+  "days_simulated": 30,
+  "outage_trials": 400,
+  "rows": [
+    {
+      "failures_to_alert": 1,
+      "false_alerts_per_day_p0.005": 14.8,
+      "false_alerts_per_day_p0.02": 56.567,
+      "false_alerts_per_day_p0.05": 130.8,
+      "caught_1min_pct": 99.2,
+      "ttd_p50_s_1min": 15.6,
+      "ttd_p95_s_1min": 28.9,
+      "caught_2min_pct": 99.5,
+      "ttd_p50_s_2min": 14.0,
+      "ttd_p95_s_2min": 28.2,
+      "caught_5min_pct": 98.8,
+      "ttd_p50_s_5min": 15.5,
+      "ttd_p95_s_5min": 28.4
+    },
+    {
+      "failures_to_alert": 2,
+      "false_alerts_per_day_p0.005": 0.1,
+      "false_alerts_per_day_p0.02": 1.0,
+      "false_alerts_per_day_p0.05": 7.5,
+      "caught_1min_pct": 100.0,
+      "ttd_p50_s_1min": 45.2,
+      "ttd_p95_s_1min": 58.4,
+      "caught_2min_pct": 100.0,
+      "ttd_p50_s_2min": 46.1,
+      "ttd_p95_s_2min": 58.9,
+      "caught_5min_pct": 100.0,
+      "ttd_p50_s_5min": 45.5,
+      "ttd_p95_s_5min": 58.2
+    },
+    {
+      "failures_to_alert": 3,
+      "false_alerts_per_day_p0.005": 0.0,
+      "false_alerts_per_day_p0.02": 0.0,
+      "false_alerts_per_day_p0.05": 0.533,
+      "caught_1min_pct": 1.8,
+      "ttd_p50_s_1min": 67.5,
+      "ttd_p95_s_1min": 82.3,
+      "caught_2min_pct": 100.0,
+      "ttd_p50_s_2min": 75.6,
+      "ttd_p95_s_2min": 88.9,
+      "caught_5min_pct": 100.0,
+      "ttd_p50_s_5min": 75.1,
+      "ttd_p95_s_5min": 88.1
+    },
+    {
+      "failures_to_alert": 4,
+      "false_alerts_per_day_p0.005": 0.0,
+      "false_alerts_per_day_p0.02": 0.0,
+      "false_alerts_per_day_p0.05": 0.0,
+      "caught_1min_pct": 0.0,
+      "ttd_p50_s_1min": null,
+      "ttd_p95_s_1min": null,
+      "caught_2min_pct": 100.0,
+      "ttd_p50_s_2min": 104.7,
+      "ttd_p95_s_2min": 118.4,
+      "caught_5min_pct": 100.0,
+      "ttd_p50_s_5min": 105.2,
+      "ttd_p95_s_5min": 118.4
+    },
+    {
+      "failures_to_alert": 5,
+      "false_alerts_per_day_p0.005": 0.0,
+      "false_alerts_per_day_p0.02": 0.0,
+      "false_alerts_per_day_p0.05": 0.0,
+      "caught_1min_pct": 0.0,
+      "ttd_p50_s_1min": null,
+      "ttd_p95_s_1min": null,
+      "caught_2min_pct": 1.5,
+      "ttd_p50_s_2min": 133.8,
+      "ttd_p95_s_2min": 147.9,
+      "caught_5min_pct": 100.0,
+      "ttd_p50_s_5min": 134.7,
+      "ttd_p95_s_5min": 147.9
+    }
+  ],
+  "machine": "Linux x86_64, Python 3.13.18"
+}

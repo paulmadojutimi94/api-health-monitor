@@ -1,0 +1,117 @@
+{
+  "trials_per_case": 20,
+  "cases": [
+    {
+      "case": "healthy 200",
+      "expected": "ok",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 11.9
+    },
+    {
+      "case": "healthy, chunked",
+      "expected": "ok",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 9.8
+    },
+    {
+      "case": "HTTP 503",
+      "expected": "http_status",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 8.1
+    },
+    {
+      "case": "HTTP 404",
+      "expected": "http_status",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 8.4
+    },
+    {
+      "case": "200 but maintenance page",
+      "expected": "body_mismatch",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 9.0
+    },
+    {
+      "case": "slow (450 ms vs 300 ms SLO)",
+      "expected": "slow",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 460.4
+    },
+    {
+      "case": "server accepts, never answers",
+      "expected": "read_timeout",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 804.8
+    },
+    {
+      "case": "slowloris body drip",
+      "expected": "deadline_exceeded",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 1211.6
+    },
+    {
+      "case": "50 MB body",
+      "expected": "body_too_large",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 87.1
+    },
+    {
+      "case": "gzip bomb (100 MB unpacked)",
+      "expected": "body_too_large",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 338.2
+    },
+    {
+      "case": "redirect loop",
+      "expected": "too_many_redirects",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 22.7
+    },
+    {
+      "case": "nothing listening (refused)",
+      "expected": "connection_refused",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 6.3
+    },
+    {
+      "case": "host unreachable (SYN dropped)",
+      "expected": "connect_timeout",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 503.6
+    },
+    {
+      "case": "DNS name doesn't exist",
+      "expected": "dns_failure",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 3.6
+    },
+    {
+      "case": "hostile reason phrase",
+      "expected": "http_status",
+      "correct": 20,
+      "trials": 20,
+      "max_check_ms": 4.7
+    }
+  ],
+  "correct": 300,
+  "total": 300,
+  "accuracy_pct": 100.0,
+  "up_down_accuracy_pct": 100.0,
+  "max_check_ms": 1211.6,
+  "confusion": {},
+  "machine": "Linux x86_64, Python 3.13.18"
+}

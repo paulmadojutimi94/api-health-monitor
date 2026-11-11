@@ -1,0 +1,36 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests evals
+      - run: python scripts/check_invisible_chars.py
+      - run: pytest -q
+      - name: README results match evals/results
+        run: python evals/run_all.py --check
+      - name: Classification + attack evals still hold
+        if: matrix.python == '3.13'
+        run: |
+          python evals/eval_classification.py
+          python evals/eval_attacks.py
+          python - <<'PY'
+          import json
+          c = json.load(open("evals/results/classification.json"))
+          a = json.load(open("evals/results/attacks.json"))
+          assert c["accuracy_pct"] >= 99.0, c["accuracy_pct"]
+          assert a["baseline_successes"] == 0, a["baseline_successes"]
+          print("evals hold:", c["accuracy_pct"], "% classification, 0 attacks succeeded")
+          PY
+      - name: Demo runs
+        if: matrix.python == '3.13'
+        run: PYTHONPATH=src timeout 60 python -m api_health_monitor demo --duration 20

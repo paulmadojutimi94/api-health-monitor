@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Status</title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:960px;margin:2rem auto;padding:0 1rem;color:#1d1d1f}
+table{border-collapse:collapse;width:100%}th,td{padding:.45rem .6rem;border-bottom:1px solid #e5e5ea;text-align:left;white-space:nowrap}
+th{font-weight:600;color:#6e6e73}tr.down td{background:#fff1f0}tr.degraded td{background:#fffbe6}
+@media(prefers-color-scheme:dark){body{background:#111;color:#eee}th,td{border-color:#333}tr.down td{background:#3a1717}tr.degraded td{background:#3a3417}}
+</style></head><body>
+<h1>Status</h1><p>Generated 2026-11-11 22:40:21</p>
+<div style="overflow-x:auto"><table><tr><th></th><th>Endpoint</th><th>Now</th><th>Uptime</th><th>Checks</th><th>p50 ms</th><th>p95 ms</th><th>Incidents</th><th>Downtime</th><th>MTTR</th></tr>
+<tr class="up"><td>🟢 auth-api</td><td>up</td><td>88.09%</td><td>42</td><td>1</td><td>601</td><td>1</td><td>8s</td><td>8s</td></tr><tr class="up"><td>🟢 flaky-api</td><td>up</td><td>78.33%</td><td>60</td><td>1</td><td>1</td><td>0</td><td>0s</td><td>-</td></tr><tr class="up"><td>🟢 payments-api</td><td>up</td><td>73.33%</td><td>60</td><td>1</td><td>2</td><td>1</td><td>8s</td><td>8s</td></tr><tr class="up"><td>🟢 search-api</td><td>up</td><td>73.33%</td><td>60</td><td>1</td><td>2</td><td>1</td><td>8s</td><td>8s</td></tr><tr class="down"><td>🔴 slowloris</td><td>down</td><td>0.00%</td><td>15</td><td>-</td><td>-</td><td>1</td><td>30s</td><td>-</td></tr></table></div>
+<h2>Recent incidents</h2><ul><li><b>auth-api</b> down at 2026-11-11 22:40:08 (read_timeout, lasted 8s)</li><li><b>search-api</b> down at 2026-11-11 22:40:00 (body_mismatch, lasted 8s)</li><li><b>payments-api</b> down at 2026-11-11 22:39:56 (http_status, lasted 9s)</li><li><b>auth-api</b> degraded at 2026-11-11 22:39:54 (slow, lasted 8s)</li><li><b>slowloris</b> down at 2026-11-11 22:39:50 (deadline_exceeded, ongoing)</li></ul>
+</body></html>

@@ -1,0 +1,206 @@
+{
+  "attacks": {
+    "slowloris_body": "Body sent 1 byte every 0.2 s, forever",
+    "hang": "Connection accepted, no reply ever",
+    "header_drip_scheduler": "Headers sent 1 byte every 0.2 s, forever",
+    "big_body": "50 MB response body",
+    "gzip_bomb": "100 KB on the wire, 100 MB decompressed",
+    "redirect_loop": "302 to itself, forever",
+    "slack_mention": "Reason phrase with <!channel> and <@user>",
+    "discord_mention": "Reason phrase with @everyone",
+    "terminal_escape": "Reason phrase with ESC[2J (clear screen)"
+  },
+  "baseline": [
+    {
+      "attack": "slowloris_body",
+      "disabled": null,
+      "seconds": 1.6,
+      "rss_growth_mb": 0.2,
+      "bytes": 9,
+      "server_requests": 1,
+      "reason": "deadline_exceeded",
+      "success": false
+    },
+    {
+      "attack": "hang",
+      "disabled": null,
+      "seconds": 1.0,
+      "rss_growth_mb": 0.2,
+      "bytes": 0,
+      "server_requests": 1,
+      "reason": "read_timeout",
+      "success": false
+    },
+    {
+      "attack": "header_drip_scheduler",
+      "disabled": null,
+      "results": 4,
+      "reasons": [
+        "deadline_exceeded"
+      ],
+      "success": false
+    },
+    {
+      "attack": "big_body",
+      "disabled": null,
+      "seconds": 0.0,
+      "rss_growth_mb": 1.2,
+      "bytes": 1015808,
+      "server_requests": 1,
+      "reason": "body_too_large",
+      "success": false
+    },
+    {
+      "attack": "gzip_bomb",
+      "disabled": null,
+      "seconds": 0.0,
+      "rss_growth_mb": 0.0,
+      "bytes": 1015808,
+      "server_requests": 1,
+      "reason": "body_too_large",
+      "success": false
+    },
+    {
+      "attack": "redirect_loop",
+      "disabled": null,
+      "seconds": 0.0,
+      "rss_growth_mb": 0.3,
+      "bytes": 0,
+      "server_requests": 6,
+      "reason": "too_many_redirects",
+      "success": false
+    },
+    {
+      "attack": "slack_mention",
+      "disabled": null,
+      "success": false
+    },
+    {
+      "attack": "discord_mention",
+      "disabled": null,
+      "success": false
+    },
+    {
+      "attack": "terminal_escape",
+      "disabled": null,
+      "success": false
+    }
+  ],
+  "baseline_successes": 0,
+  "baseline_total": 9,
+  "ablation": [
+    {
+      "defence": "total_deadline",
+      "label": "Total deadline while reading the body",
+      "attacks": 1,
+      "succeeded": 1,
+      "detail": [
+        {
+          "attack": "slowloris_body",
+          "disabled": "total_deadline",
+          "success": true,
+          "note": "hung > 25s"
+        }
+      ]
+    },
+    {
+      "defence": "socket_timeouts",
+      "label": "Connect/read socket timeouts",
+      "attacks": 1,
+      "succeeded": 1,
+      "detail": [
+        {
+          "attack": "hang",
+          "disabled": "socket_timeouts",
+          "success": true,
+          "note": "hung > 25s"
+        }
+      ]
+    },
+    {
+      "defence": "watchdog",
+      "label": "Scheduler watchdog",
+      "attacks": 1,
+      "succeeded": 1,
+      "detail": [
+        {
+          "attack": "header_drip_scheduler",
+          "disabled": "watchdog",
+          "results": 0,
+          "reasons": [],
+          "success": true
+        }
+      ]
+    },
+    {
+      "defence": "body_cap",
+      "label": "Body size cap (1 MB)",
+      "attacks": 2,
+      "succeeded": 2,
+      "detail": [
+        {
+          "attack": "big_body",
+          "disabled": "body_cap",
+          "seconds": 0.11,
+          "rss_growth_mb": 50.4,
+          "bytes": 52428800,
+          "server_requests": 1,
+          "reason": "ok",
+          "success": true
+        },
+        {
+          "attack": "gzip_bomb",
+          "disabled": "body_cap",
+          "seconds": 0.12,
+          "rss_growth_mb": 75.4,
+          "bytes": 104857600,
+          "server_requests": 1,
+          "reason": "ok",
+          "success": true
+        }
+      ]
+    },
+    {
+      "defence": "redirect_limit",
+      "label": "Redirect limit (5)",
+      "attacks": 1,
+      "succeeded": 1,
+      "detail": [
+        {
+          "attack": "redirect_loop",
+          "disabled": "redirect_limit",
+          "seconds": 7.26,
+          "rss_growth_mb": 476.1,
+          "bytes": 0,
+          "server_requests": 10001,
+          "reason": "too_many_redirects",
+          "success": true
+        }
+      ]
+    },
+    {
+      "defence": "sanitize_text",
+      "label": "Sanitising server text before alerting",
+      "attacks": 3,
+      "succeeded": 2,
+      "detail": [
+        {
+          "attack": "slack_mention",
+          "disabled": "sanitize_text",
+          "success": true
+        },
+        {
+          "attack": "discord_mention",
+          "disabled": "sanitize_text",
+          "success": false
+        },
+        {
+          "attack": "terminal_escape",
+          "disabled": "sanitize_text",
+          "success": true
+        }
+      ]
+    }
+  ],
+  "machine": "Linux x86_64, Python 3.13.18"
+}

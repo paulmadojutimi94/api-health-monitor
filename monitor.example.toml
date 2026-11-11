@@ -1,0 +1,42 @@
+# Copy to monitor.toml and edit. Every [[endpoint]] inherits [defaults] unless it overrides a key.
+
+[defaults]
+interval_s = 30            # how often to check
+connect_timeout_s = 3      # max wait for the TCP (+TLS) handshake
+read_timeout_s = 5         # max silence between bytes once connected
+deadline_s = 10            # max for the whole check, however the server behaves
+latency_slo_ms = 1000      # slower than this = DEGRADED (still up, but slow)
+failures_to_alert = 3      # consecutive failures before "DOWN" alert
+successes_to_recover = 2   # consecutive successes before "RECOVERED" alert
+max_body_bytes = 1000000   # stop reading bodies bigger than ~1 MB
+max_redirects = 5
+realert_every_s = 0        # e.g. 1800 = remind every 30 min while down; 0 = once
+
+[[endpoint]]
+name = "github-api"
+url = "https://api.github.com/"
+expect_body = "current_user_url"   # a 200 that doesn't contain this is still DOWN
+
+[[endpoint]]
+name = "httpbin-status"
+url = "https://httpbin.org/status/200"
+interval_s = 60
+
+[[endpoint]]
+name = "example"
+url = "https://example.com/"
+method = "HEAD"            # HEAD: headers only, cheaper than GET
+latency_slo_ms = 800
+headers = { "Accept" = "text/html" }
+
+[alerts]
+console = true
+jsonl = "data/alerts.jsonl"
+# webhook_url = "https://hooks.slack.com/services/XXX/YYY/ZZZ"   # keep real URLs out of git
+# webhook_format = "slack"   # slack | discord | generic
+
+[storage]
+db_path = "data/monitor.db"
+
+[network]
+use_env_proxy = true       # honour HTTP(S)_PROXY / NO_PROXY environment variables
